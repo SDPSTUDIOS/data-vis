@@ -1,0 +1,23 @@
+id,country,gram_per_capita,cigarettes_per_day,daily_smokers_percentage
+1,Australia,790,..,..
+2,Costa Rica,245.8,9.9,11
+3,Czechia,2373,11,18.2
+4,Denmark,1283,..,..
+5,Finland,918,..,17.4
+6,France,..,..,29.4
+7,Germany,1613,..,..
+8,Greece,1325.4,..,..
+9,Hungary,1637,..,..
+10,Iceland,1040.3,..,12.6
+11,Ireland,1026.9,14.1,19
+12,Israel,839.8,..,..
+13,Japan,1655,15.5,18.2
+14,Korea,1581,13.6,17.3
+15,New Zealand,704,10.6,15.1
+16,Norway,876,12.1,13
+17,Poland,..,..,..
+18,Spain,1537.5,..,..
+19,Switzerland,1406,..,..
+20,Türkiye,1076.5,..,..
+21,United Kingdom,702.4,10,17.8
+22,United States,1222,14.1,11.4
