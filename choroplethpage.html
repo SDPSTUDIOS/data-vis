@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <link href="d3-geomap.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+    <style>
+        body {
+            background-color: #f5f5f5;
+            font-family: Arial, sans-serif;
+        }
+        .navbar {
+            margin-bottom: 0;
+            border-radius: 0;
+            font-size: 1.5em;
+            padding: 20px 0; 
+        }
+        .navbar-brand {
+            font-size: 25px;
+            font-weight: 700;
+        }
+        h1 {
+            text-align: center;
+            margin-top: 20px;
+            color: #333;
+        }
+        .container {
+            margin-top: 20px;
+            text-align: center;
+        }
+        select, button {
+            padding: 10px;
+            margin: 10px 0;
+            border-radius: 5px;
+            border: 1px solid #ccc;
+        }
+        button {
+            background-color: #5cb85c;
+            color: white;
+            border: none;
+        }
+        button:hover {
+            background-color: #4cae4c;
+        }
+        .d3-geomap {
+            margin-top: 20px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            background-color: white;
+            padding: 10px;
+        }
+        #pie {
+            margin-top: 20px;
+        }
+
+        .pie-container{
+            background-color: antiquewhite;
+            display: flex;
+            justify-content: center;
+            border-radius: 10px;
+            border: 1px solid black;
+            margin-top: 20px;
+            margin-bottom: 20px;
+        }
+        .thumbnail-section {
+            text-align: center;
+            margin-top: 20px;
+        }
+        .thumbnail-section img {
+            width: 80%; 
+            height: auto;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+        }
+        footer {
+            background-color: #333;
+            color: #fff;
+            padding: 20px 0;
+            text-align: center;
+            font-size: 1em;
+        }
+        footer a {
+            color: #fff;
+            text-decoration: none;
+        }
+        footer a:hover {
+            text-decoration: underline;
+        }
+    </style>
+    <title>World Map Indicator</title>
+</head>
+<body>
+
+    <nav class="navbar navbar-inverse">
+        <div class="container-fluid">
+            <div class="navbar-header">
+                <a class="navbar-brand" href="#">Data Visualization</a>
+            </div>
+            <ul class="nav navbar-nav">
+                <li><a href="index.html">Home</a></li>
+                <li><a href="Final_project.html">Visualization 1</a></li>
+                <li class="active"><a href="choroplethpage.html">Visualization 2</a></li>
+                <li><a href="context.html">Context</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <section class="thumbnail-section">
+        <img src="smoking-thumbnail.png" alt="Smoking Visualization Thumbnail">
+    </section>
+
+    <h1>D3 Choropleths</h1>
+    <div class="container">
+        <div class="row">
+            <select name="selected" id="selected">
+                <option value="dataset1">Smoking population</option>
+                <option value="dataset2">Secondhand smoking death share</option>
+                <option value="dataset3" selected>Smoking death</option>
+            </select>
+            <button onclick="update()">Update</button>
+        </div>
+        <div class="row">
+            <div class="col-sm-12">
+                <div class="d3-geomap" id="map"></div>
+                <div class="pie-container">
+                    <svg class="pie" id="pie"></svg>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script src="https://d3js.org/d3.v7.min.js"></script>
+    <script src="https://d3js.org/d3-queue.v3.min.js"></script>
+    <script src="https://unpkg.com/topojson@3"></script>
+    <script src="d3-geomap.min.js"></script>
+    <script src="choropleth.js"></script>
+    
+    <footer>
+        <div class="container">
+            <p>&copy; 2024 Data Visualization Project. All Rights Reserved.</p>
+            <p>Made by Dunger</p>
+            <p>Dataset credit to: <a href="https://ourworldindata.org/smoking#:~:text=The%20WHO%20estimates%20that%20more,estimate%20as%20of%20November%202023.&text=More%20than%207%20million%20of,exposed%20to%20second-hand%20smoke.">ourworldindata.org</a></p>
+        </div>
+    </footer>
+</body>
+</html>

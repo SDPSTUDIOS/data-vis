@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css" rel="stylesheet">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+    <style>
+        body {
+            background-color: #f5f5f5;
+            font-family: 'Open Sans', Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+        }
+        .navbar {
+            margin-bottom: 0;
+            border-radius: 0;
+            font-size: 1.5em;
+            padding: 20px 0;
+        }
+        .navbar-brand {
+            font-size: 25px;
+            font-weight: 700;
+        }
+        .context-container {
+            padding: 40px;
+        }
+        .img-container{
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+        .img-container img{
+            width: 70%;
+            border-radius: 15px;
+        }
+        .horizontal-ruler{
+            border: none;
+            height: 2px;
+            background-color: #272727;
+            width: 60%;
+            margin-top: 30px;
+            margin-bottom: 40px;
+        }
+
+        .sub-class-questions{
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+        .sub-class-questions h1{
+            font-weight: 700;
+            text-align: center;
+            margin-top: 80px;
+            margin-bottom: 80px;
+            margin-right: 150px;
+            font-size: 60px;
+        }
+        .sub-class-questions ol{
+            font-weight: 500;
+            margin-top: 80px;
+            margin-bottom: 80px;
+            margin-left: 200px;
+            font-size: 25px;
+        }
+        footer {
+            background-color: #333;
+            color: #fff;
+            padding: 20px 0;
+            text-align: center;
+            font-size: 1em;
+            margin-top: auto;
+        }
+        footer a {
+            color: #fff;
+            text-decoration: none;
+        }
+        footer a:hover {
+            text-decoration: underline;
+        }
+    </style>
+    <title>Context</title>
+</head>
+<body>
+    <nav class="navbar navbar-inverse">
+        <div class="container-fluid">
+            <div class="navbar-header">
+                <a class="navbar-brand" href="#">Data Visualization</a>
+            </div>
+            <ul class="nav navbar-nav">
+                <li><a href="index.html">Home</a></li>
+                <li><a href="Final_project.html">Visualization 1</a></li>
+                <li><a href="choroplethpage.html">Visualization 2</a></li>
+                <li class="active"><a href="context.html">Context</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <div class="container context-container">
+        <div class="img-container">
+            <img src="phrase.png">
+        </div>
+    </div>
+
+    <section>
+        <hr class="horizontal-ruler">
+    </section>
+
+    <section class="sub-class-questions">
+        <h1>? Questions ?</h1>
+        <ol>
+            <li>How many people are smoking everywhere? <a href="Final_project.html">Bubble Chart</a></li>
+            <li>How many people are dying due to smoking? <a href="choroplethpage.html">choropleth Chart</a></li>
+            <li>What is the distribution of age in death due to smoking in every country? <a href="choroplethpage.html">Pie Chart</a></li>
+        </ol>
+    </section>
+
+    <section>
+        <hr class="horizontal-ruler">
+    </section>
+
+    <footer>
+        <div class="container">
+            <p>&copy; 2024 Data Visualization Project. All Rights Reserved.</p>
+            <p>Made by Dunger and Senithu</p>
+        </div>
+    </footer>
+</body>
+</html>

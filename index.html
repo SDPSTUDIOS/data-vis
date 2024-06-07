@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css" rel="stylesheet">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+    <style>
+        body {
+            background-color: #f5f5f5;
+            font-family: 'Open Sans', Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+        }
+        .navbar {
+            margin-bottom: 0;
+            border-radius: 0;
+            font-size: 1.5em;
+            padding: 20px 0;
+        }
+        .navbar-brand {
+            font-size: 25px;
+            font-weight: 700;
+        }
+        .head-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            height: calc(100vh - 70px);
+            background-image: url('back.webp');
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+            color: #333333;
+            padding: 0 20px;
+        }
+        .centered-container {
+            text-align: left;
+        }
+        .centered-container-right {
+            text-align: right;
+        }
+        h1 {
+            font-size: 4em;
+            font-weight: 750;
+            margin-bottom: 20px;
+        }
+        p {
+            font-size: 1.5em;
+            margin-bottom: 40px;
+        }
+        .btn-visualization {
+            margin: 10px;
+            padding: 15px 30px;
+            font-size: 1.5em;
+            border-radius: 10px;
+        }
+        footer {
+            background-color: #333;
+            color: #fff;
+            padding: 10px 0;
+            text-align: center;
+            font-size: 1em;
+        }
+        footer a {
+            color: #fff;
+            text-decoration: none;
+        }
+        footer a:hover {
+            text-decoration: underline;
+        }
+    </style>
+    <title>Home Page</title>
+</head>
+<body>
+    <nav class="navbar navbar-inverse">
+        <div class="container-fluid">
+            <div class="navbar-header">
+                <a class="navbar-brand" href="#">Data Visualization</a>
+            </div>
+            <ul class="nav navbar-nav">
+                <li class="active"><a href="index.html">Home</a></li>
+                <li><a href="Final_project.html">Visualization 1</a></li>
+                <li><a href="choroplethpage.html">Visualization 2</a></li>
+                <li><a href="context.html">Context</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <section class="head-container">
+        <div class="centered-container">
+            <div>
+                <h1>Danger Of Smoking<br>Visualization Project!</h1>
+                <p>Select a visualization to explore:</p>
+                <a href="Final_project.html" class="btn btn-primary btn-visualization">Senithu's Visualization</a>
+                <a href="choroplethpage.html" class="btn btn-success btn-visualization">Dunger's Visualization</a>
+            </div>
+        </div>
+        <aside class="centered-container-right">
+            <div>
+                <h1>COS30045 <br> Data Visualization</h1>
+            </div>
+        </aside>
+    </section>
+
+    <footer>
+        <div class="container">
+            <p>&copy; 2024 Data Visualization Project. All Rights Reserved.</p>
+            <p>Made by Dunger and Senithu</p>
+        </div>
+    </footer>
+</body>
+</html>

@@ -1,0 +1,283 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css" rel="stylesheet">
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+    <title>D3 Bubble Chart</title>
+    <script src="https://d3js.org/d3.v6.min.js"></script>
+    <style>
+        body {
+            font-family: sans-serif;
+            display: flex;
+            flex-direction: column;
+            background-color: #121212;
+            color: #ffffff;
+            margin: 0;
+            padding: 0;
+        }
+
+        .navbar {
+            margin-bottom: 0;
+            border-radius: 0;
+            font-size: 1.5em;
+            padding: 20px 0; 
+        }
+        .navbar-brand {
+            font-size: 25px;
+            font-weight: 700;
+        }
+
+        .tooltip {
+            position: absolute;
+            background-color: rgba(255, 255, 255, 0.9);
+            color: #000000;
+            padding: 10px;
+            border-radius: 5px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+            pointer-events: none;
+            opacity: 0;
+            font-family: sans-serif;
+        }
+        .button-container {
+            margin-top: 20px;
+        }
+        .button-container button {
+            margin-right: 10px;
+            padding: 10px;
+            font-size: 14px;
+            cursor: pointer;
+            background-color: #333333;
+            color: #ffffff;
+            border: 1px solid #555555;
+            border-radius: 5px;
+        }
+        .button-container button:hover {
+            background-color: #555555;
+        }
+        .chart-container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+        .chart-title {
+            font-size: 24px;
+            margin-bottom: 10px;
+        }
+        svg {
+            background-color: #1e1e1e;
+        }
+        footer {
+            background-color: #333;
+            color: #fff;
+            padding: 20px 0;
+            text-align: center;
+            font-size: 1em;
+            margin-top: auto;
+        }
+        footer a {
+            color: #fff;
+            text-decoration: none;
+        }
+        footer a:hover {
+            text-decoration: underline;
+        }
+    </style>
+</head>
+<body>
+    <nav class="navbar navbar-inverse">
+        <div class="container-fluid">
+            <div class="navbar-header">
+                <a class="navbar-brand" href="#">Data Visualization</a>
+            </div>
+            <ul class="nav navbar-nav">
+                <li><a href="index.html">Home</a></li>
+                <li class="active"><a href="Final_project.html">Visualization 1</a></li>
+                <li><a href="choroplethpage.html">Visualization 2</a></li>
+                <li><a href="context.html">Context</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <div class="chart-container">
+        <h1>Tobacco usage of the population aged 15+</h1>
+        <div id="dataset-title" class="chart-title">Dataset: 2010</div>
+        <svg></svg>
+
+        <div class="button-container">
+            <button onclick="loadData('dataset/2010.csv', '2010')">2010</button>
+            <button onclick="loadData('dataset/2011.csv', '2011')">2011</button>
+            <button onclick="loadData('dataset/2012.csv', '2012')">2012</button>
+            <button onclick="loadData('dataset/2013.csv', '2013')">2013</button>
+            <button onclick="loadData('dataset/2014.csv', '2014')">2014</button>
+            <button onclick="loadData('dataset/2015.csv', '2015')">2015</button>
+            <button onclick="loadData('dataset/2016.csv', '2016')">2016</button>
+            <button onclick="loadData('dataset/2017.csv', '2017')">2017</button>
+            <button onclick="loadData('dataset/2018.csv', '2018')">2018</button>
+            <button onclick="loadData('dataset/2019.csv', '2019')">2019</button>
+            <button onclick="loadData('dataset/2020.csv', '2020')">2020</button>
+            <button onclick="loadData('dataset/2021.csv', '2021')">2021</button>
+            <button onclick="loadData('dataset/2022.csv', '2022')">2022</button>
+        </div>
+        <br><br>
+    </div>
+
+    <script>
+        const baseWidth = 800;
+        const baseHeight = 600;
+        const margin = { top: 40, right: 20, bottom: 70, left: 150 };
+        const padding = 50;
+        let dynamicWidth = baseWidth;
+        let dynamicHeight = baseHeight;
+
+        const svg = d3.select("svg")
+            .attr("width", dynamicWidth + margin.left + margin.right)
+            .attr("height", dynamicHeight + margin.top + margin.bottom)
+            .append("g")
+            .attr("transform", `translate(${margin.left},${margin.top})`);
+
+        const xScale = d3.scaleLinear();
+        const yScale = d3.scalePoint().padding(1);
+        const sizeScale = d3.scaleSqrt().range([15, 50]); // Set minimum radius to 15
+
+        const xAxis = d3.axisBottom(xScale).tickSize(-dynamicHeight + padding * 2);
+        const yAxis = d3.axisLeft(yScale).tickSize(-dynamicWidth + padding * 2);
+
+        const xAxisGroup = svg.append("g")
+            .attr("transform", `translate(0,${dynamicHeight - padding})`)
+            .attr("class", "axis--x");
+
+        const yAxisGroup = svg.append("g")
+            .attr("transform", `translate(${padding},0)`)
+            .attr("class", "axis--y");
+
+        const tooltip = d3.select("body").append("div")
+            .attr("class", "tooltip");
+
+        svg.append("text")
+            .attr("class", "axis-label")
+            .attr("x", dynamicWidth / 2)
+            .attr("y", dynamicHeight - padding + 40)
+            .style("text-anchor", "middle")
+            .style("fill", "#ffffff")
+            .style("font-size", "14px")
+            .style("font-family", "sans-serif")
+            .text("Grams per Capita");
+
+        function updateScales(data) {
+            xScale.domain([0, d3.max(data, d => d.gram_per_capita)]).range([padding, dynamicWidth - padding]);
+            yScale.domain(data.map(d => d.country)).range([dynamicHeight - padding, padding]);
+            sizeScale.domain([0, d3.max(data, d => d.daily_smokers_percentage)]);
+        }
+
+        function updateAxes() {
+            xAxisGroup.transition().duration(1000).call(xAxis);
+            yAxisGroup.transition().duration(1000).call(yAxis);
+
+            svg.selectAll(".axis--x .tick text")
+                .style("font-size", "12px")
+                .style("fill", "#ffffff")
+                .style("font-family", "sans-serif");
+
+            svg.selectAll(".axis--y .tick text")
+                .style("font-size", "12px")
+                .style("fill", "#ffffff")
+                .style("font-family", "sans-serif");
+
+            svg.selectAll(".axis--x .tick line")
+                .attr("stroke", "#555555");
+
+            svg.selectAll(".axis--y .tick line")
+                .attr("stroke", "#555555");
+        }
+
+        function updateChart(data) {
+            updateScales(data);
+            updateAxes();
+
+            const bubbles = svg.selectAll("circle").data(data, d => d.id);
+
+            bubbles.enter().append("circle")
+                .attr("cx", d => xScale(d.gram_per_capita))
+                .attr("cy", d => yScale(d.country))
+                .attr("r", 0)
+                .style("fill", (d, i) => d3.schemeCategory10[i % 10] + 'a0')  //transparency
+                .style("stroke", "none")
+                .on("mouseover", (event, d) => {
+                    tooltip.transition().duration(200).style("opacity", .9);
+                    tooltip.html(`ID: ${d.id}<br>Country: ${d.country}<br>Grams per Capita: ${d.gram_per_capita}<br>Cigarettes per Smoker per Day: ${d.cigarettes_per_day}<br>Daily Smokers %: ${d.daily_smokers_percentage}`)
+                        .style("left", (event.pageX + 15) + "px")
+                        .style("top", (event.pageY - 28) + "px");
+                })
+                .on("mouseout", () => {
+                    tooltip.transition().duration(500).style("opacity", 0);
+                })
+                .transition().duration(1000)
+                .attr("r", d => Math.max(sizeScale(d.daily_smokers_percentage), 15)); // minimum radius 15
+
+            bubbles.transition().duration(1000)
+                .attr("cx", d => xScale(d.gram_per_capita))
+                .attr("cy", d => yScale(d.country))
+                .attr("r", d => Math.max(sizeScale(d.daily_smokers_percentage), 15)); // minimum radius 15
+
+            bubbles.exit().transition().duration(1000)
+                .attr("r", 0)
+                .remove();
+
+            const labels = svg.selectAll("text.label").data(data, d => d.id);
+
+            labels.enter().append("text")
+                .attr("class", "label")
+                .attr("x", d => xScale(d.gram_per_capita))
+                .attr("y", d => yScale(d.country))
+                .attr("dy", ".3em")
+                .attr("text-anchor", "middle")
+                .style("fill", "#ffffff") // Label text color
+                .style("font-size", "10px")
+                .style("font-family", "sans-serif")
+                .text(d => d.daily_smokers_percentage)  // Display daily smokers percentage
+                .style("opacity", 0)
+                .transition().duration(1000)
+                .style("opacity", 1);
+
+            labels.transition().duration(1000)
+                .attr("x", d => xScale(d.gram_per_capita))
+                .attr("y", d => yScale(d.country))
+                .text(d => d.daily_smokers_percentage);  // Display daily smokers percentage
+
+            labels.exit().transition().duration(1000)
+                .style("opacity", 0)
+                .remove();
+        }
+
+        function loadData(filename, year) {
+            d3.csv(filename, d => {
+                return {
+                    id: +d.id,
+                    country: d.country,
+                    gram_per_capita: d.gram_per_capita === '..' ? 0 : +d.gram_per_capita,
+                    cigarettes_per_day: d.cigarettes_per_day === '..' ? 0 : +d.cigarettes_per_day,
+                    daily_smokers_percentage: d.daily_smokers_percentage === '..' ? 0 : +d.daily_smokers_percentage
+                };
+            }).then(data => {
+                updateChart(data);
+                document.getElementById('dataset-title').textContent = `Dataset: ${year}`;
+            }).catch(error => {
+                console.error('Error loading the CSV file:', error);
+            });
+        }
+
+        // Initial dataset load
+        loadData('dataset/2010.csv', '2010');
+    </script>
+    
+    <footer>
+        <div class="container">
+            <p>&copy; 2024 Data Visualization Project. All Rights Reserved.</p>
+            <p>Made by Senithu</p>
+            <p>Dataset credit to: <a href="https://stats.oecd.org/viewhtml.aspx?datasetcode=HEALTH_LVNG&lang=en">OECD health Statistics</a></p>
+        </div>
+    </footer>
+</body>
+</html>
